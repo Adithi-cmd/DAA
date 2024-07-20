@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#define MAX 20
+char arr[MAX][MAX];
+void print_grid(int n, int x[]) {
+ int i, j;
+ for (i = 1; i <= n; i++) {
+ for (j = 1; j <= n; j++) {
+ arr[i][j] = '-';
+ }
+ }
+ for (i = 1; i <= n; i++) {
+ arr[i][x[i]] = 'Q';
+ }
+ for (i = 1; i <= n; i++) {
+ for (j = 1; j <= n; j++) {
+ printf("\t%c", arr[i][j]);
+ }
+ printf("\n");
+ }
+}
+/* Check if it's safe to place a queen at column k */
+int safetoplace(int x[], int k) {
+ int i;
+ for (i = 1; i < k; i++) {
+ if (x[i] == x[k] || abs(i - k) == abs(x[i] - x[k])) {
+ return 0; /* Not safe */
+ }
+ }
+ return 1; /* Safe */
+}
+/* Recursive function to solve N-Queens problem */
+void nqueens(int n, int k, int x[], int *count) {
+ int i;
+ for (i = 1; i <= n; i++) {
+ x[k] = i; /* Place queen in row i of column k */
+ if (safetoplace(x, k)) {
+ if (k == n) { /* All queens are placed successfully */
+ (*count)++;
+ printf("\n\tPlacement %d is: \n\n", *count);
+ print_grid(n, x);
+ printf("\n");
+ } else {
+ nqueens(n, k + 1, x, count); /* Place next queen */
+ }
+ }
+ }
+}
+int main(int argc, char *argv[]) {
+ int n;
+ printf("\t C PROGRAM OF 8-QUEEN PROBLEM\n");
+ printf("Enter the number of Queens: ");
+ scanf("%d", &n);
+ if (n <= 0 || n > 8) {
+ printf("Invalid input. Please enter a number between 1 and 8.\n");
+ return 1;
+ }
+ int x[MAX]; /* Array to store column positions of queens */
+ int count = 0;
+ int k = 1;
+ x[k] = 0;
+ while (k != 0) {
+ x[k] = x[k] + 1;
+ while ((x[k] <= n) && (!safetoplace(x, k))) {
+ x[k] = x[k] + 1;
+ }
+ if (x[k] <= n) {
+ if (k == n) {
+ count++;
+ printf("\n\tPlacement %d is: \n\n", count);
+ print_grid(n, x);
+ printf("\n");
+ } else {
+ k++;
+ x[k] = 0;
+ }
+ } else {
+ k--;
+ }
+ }
+ printf("\nTotal solutions found: %d\n", count);
+ system("PAUSE");
+ return 0;
+}
