@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define MAX 2000
+void get_data(int A[])
+{
+ for (int i = 0; i < MAX; i++)
+ {
+ A[i] = rand();
+ printf("%d\t", A[i]);
+ }
+}
+int linear_search(int A[], int key)
+{
+ int i;
+ for (i = 0; i < MAX; i++)
+ {
+ if (A[i] == key)
+ {
+ return i;
+ } }
+ return -1;
+}
+int main()
+{
+ int A[MAX], key, ind;
+ clock_t start1 = 0, end1 = 0;
+ get_data(A);
+ start1 += clock();
+ printf("Enter the key element to be searched: ");
+ scanf("%d", &key);
+ind = linear_search(A, key);
+ if (ind == -1)
+ printf("Element %d not found.\n", key);
+ else
+ printf("Element found at position %d\n", ind + 1);
+ end1 += clock();
+ printf("Time taken is : %f\n", ((float)(end1 - start1)) / CLOCKS_PER_SEC);
+ return 0;
+}
