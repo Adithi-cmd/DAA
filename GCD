@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+int CIC(int m,int n){
+ int t;
+ if(m>n)
+ t=n;
+ else
+ t=m;
+ while(t>0){
+ if(m%t==0&&n%t==0)
+ return t;
+ t--;
+ }
+}
+int euclids(int m,int n){
+while(n!=0){
+ int r=m%n;
+ m=n;
+ n=r;
+}
+return m;
+}
+int main()
+{
+ int m,n;
+ printf("enter corresponding values to find GCd\n");
+ printf("enter m:");
+ scanf("%d",&m);
+ printf("enter n:");
+ scanf("%d",&n);
+ printf("consecutive integer checking:%d",CIC(m,n));
+ printf("euclids algorithm :%d",euclids(m,n));
+ return 0;
+}
